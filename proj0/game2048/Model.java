@@ -5,7 +5,7 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
- *  @author TODO: YOUR NAME HERE
+ *  @author TODO: Mandy Zhou
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -107,8 +107,41 @@ public class Model extends Observable {
      *    and the trailing tile does not.
      * */
     public boolean tilt(Side side) {
-        boolean changed;
-        changed = false;
+        boolean changed = false;
+        /** set side */
+        board.setViewingPerspective(side);
+        for (int col = 0; col < board.size(); col ++) {
+            /** initial up_row value, up_row will decrease per down_row value */
+            int up_row = board.size() - 1;
+            for (int down_row = board.size() - 2; down_row >= 0; down_row--) {
+                Tile d = board.tile(col, down_row);
+                if (d == null) {
+                    continue;
+                }
+                Tile u = board.tile(col, up_row);
+                if (u == null) {
+                    board.move(col, up_row, d);
+                    changed = true;
+                    continue;
+                }
+                /** if up_row value is the same as down_row, value will be merged into up_row
+                 * meanwhile up_row will move to next row */
+                if (u.value() == d.value()) {
+                    board.move(col, up_row, d);
+                    up_row--;
+                    score += u.value() * 2;
+                }
+                /** if not, no merge but up_row will still move to next row
+                 * and move happen */
+                else {
+                    up_row--;
+                    board.move(col, up_row, d);
+                }
+                changed = true;
+            }
+        }
+        /** call side NORTH, so it can act as NORTH direction no matter which direction to move */
+        board.setViewingPerspective(Side.NORTH);
 
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
@@ -137,17 +170,28 @@ public class Model extends Observable {
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
+        for (int row = 0; row < b.size(); row ++) {
+            for (int col = 0; col < b.size(); col ++) {
+                if (b.tile(col, row) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
-
     /**
      * Returns true if any tile is equal to the maximum valid value.
      * Maximum valid value is given by MAX_PIECE. Note that
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
+        for (int row = 0; row < b.size() ; row ++) {
+            for (int col = 0; col < b.size(); col ++) {
+                if (b.tile(col, row)!= null && b.tile(col, row).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -158,7 +202,27 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
+        if (emptySpaceExists(b)) {
+            return true;
+        }
+        for (int row = 0; row < b.size() ; row ++) {
+            for (int col = 0; col < b.size(); col ++) {
+                if (b.tile(col, row)== null) {
+                    continue;
+                }
+                int cur_value = b.tile(col, row).value();
+                if (col + 1 < b.size() &&
+                    b.tile(col+1, row)!= null &&
+                    b.tile(col+1, row).value() == cur_value) {
+                    return true;
+                }
+                if (row + 1 < b.size() &&
+                        b.tile(col, row+1)!= null &&
+                        b.tile(col, row+1).value() == cur_value) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
