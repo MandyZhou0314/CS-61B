@@ -56,7 +56,7 @@ public class ArrayDeque<T> implements Deque<T> {
             return null;
         }
         else if (size < items.length * 0.25 && items.length > 16){
-            resize(size / 4);
+            resize(items.length / 3);
         }
         T x = get(0);
         firstIndex = (firstIndex + 1) % items.length;
@@ -70,7 +70,7 @@ public class ArrayDeque<T> implements Deque<T> {
             return null;
         }
         else if (size < items.length * 0.25 && items.length > 16){
-            resize(size / 4);
+            resize(items.length / 3);
         }
         T x = get(size - 1);
         lastIndex = (lastIndex - 1 + items.length) % items.length;
