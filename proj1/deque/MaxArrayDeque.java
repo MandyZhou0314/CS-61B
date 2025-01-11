@@ -1,4 +1,6 @@
 package deque;
+import jh61b.junit.In;
+
 import java.util.Comparator;
 
 public class MaxArrayDeque<T> extends ArrayDeque<T> {
@@ -38,12 +40,18 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         }
     }
 
+    public static class IntValueComparator implements Comparator<Integer> {
+        public int compare(Integer s1, Integer s2) {
+            return s1.compareTo(s2);
+        }
+    }
+
     public static void main(String[] args) {
-        MaxArrayDeque<String> mad = new MaxArrayDeque<>(new LengthComparator());
-        mad.addFirst("ab");
-        mad.addFirst("b");
-        System.out.println(mad.max());
-        System.out.println(mad.max(new ValueComparator()));
+        MaxArrayDeque<Integer> mad2 = new MaxArrayDeque<>(new IntValueComparator());
+        mad2.addFirst(0);
+        mad2.addFirst(1 );
+        mad2.addLast(2);
+        System.out.println(mad2.removeLast());
     }
 
 }
