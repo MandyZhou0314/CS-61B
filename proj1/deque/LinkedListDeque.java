@@ -2,7 +2,7 @@ package deque;
 
 
 //set classes or methods and remember to add comments to private if necessary
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T> {
     private class Node {
         public T item;
         public Node prev;
@@ -26,6 +26,7 @@ public class LinkedListDeque<T> {
     }
 
     //circular sentinel approach
+    @Override
     public void addFirst(T x){
         Node n = new Node(x, null, null);
         n.next = this.sentinel.next;
@@ -36,6 +37,7 @@ public class LinkedListDeque<T> {
     }
 
     //circular sentinel approach
+    @Override
     public void addLast(T x){
         Node n = new Node(x, null, null);
         n.prev = this.sentinel.prev;
@@ -47,6 +49,7 @@ public class LinkedListDeque<T> {
     }
 
     //circular sentinel approach
+    @Override
     public T removeFirst(){
         if (size == 0)
             return null;
@@ -58,6 +61,7 @@ public class LinkedListDeque<T> {
     }
 
     //circular sentinel approach
+    @Override
     public T removeLast(){
         if (size == 0)
             return null;
@@ -68,15 +72,13 @@ public class LinkedListDeque<T> {
         return n.item;
     }
 
+    @Override
     public int size(){
         return this.size;
     }
 
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
     //uses iteration
+    @Override
     public T get(int index) {
         if (index >= size)
             return null;
@@ -118,6 +120,7 @@ public class LinkedListDeque<T> {
 
     //}
 
+    @Override
     public void printDeque() {
         Node curNode = this.sentinel.next;
         while (curNode != this.sentinel) {
@@ -129,28 +132,15 @@ public class LinkedListDeque<T> {
 
     public static void main(String[] args) {
         LinkedListDeque<String> ll = new LinkedListDeque<>();
-        //ll.printDeque();
         ll.addFirst("a");
         ll.addFirst("b");
-        //ll.printDeque();
         ll.addLast("c");
         ll.addLast("d");
+        ll.removeFirst();
+        ll.removeLast();
         ll.printDeque();
         System.out.println(ll.isEmpty());
         System.out.println(ll.get(0));
-        //System.out.println(ll.get(2));
-        //System.out.println(ll.get(3));
-        //System.out.println(ll.get(1));
-        //System.out.println(ll.get(4));
-        //System.out.println(ll.getRecursive(0));
-        //System.out.println(ll.getRecursive(2));
-        //System.out.println(ll.getRecursive(3));
-        //System.out.println(ll.getRecursive(1));
         System.out.println(ll.getRecursive(4));
-        //ll.removeFirst();
-        //ll.printDeque();
-        //ll.removeLast();
-        //ll.printDeque();
-
     }
 }
