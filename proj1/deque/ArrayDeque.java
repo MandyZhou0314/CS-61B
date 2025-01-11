@@ -55,7 +55,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (size == 0){
             return null;
         }
-        else if (size < items.length * 0.25 && items.length >16){
+        else if (size < items.length * 0.25 && items.length > 16){
             resize(size / 4);
         }
         T x = items[firstIndex];
@@ -69,7 +69,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (size == 0){
             return null;
         }
-        else if (size < items.length * 0.25 && items.length >16){
+        else if (size < items.length * 0.25 && items.length > 16){
             resize(size / 4);
         }
         T x = items[lastIndex];
@@ -80,6 +80,9 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T get(int index) {
+        if (index < 0 || index >= size) {
+            return null;
+        }
         int arrayIndex = (firstIndex + 1 + index) % items.length;
         return items[arrayIndex];
     }
@@ -87,13 +90,35 @@ public class ArrayDeque<T> implements Deque<T> {
     @Override
     public void printDeque() {
         for (int i = 0; i < size(); i++){
-            System.out.print(get(i));
+            System.out.print(get(i) + " ");
         }
         System.out.println();
     }
 
     public static void main(String[] args) {
         ArrayDeque<String> ad = new ArrayDeque<>();
+        ad.addFirst("a");
+        ad.addFirst("b");
+        ad.addLast("c");
+        ad.addLast("d");
+        ad.addFirst("a");
+        ad.addFirst("b");
+        ad.addLast("c");
+        ad.addLast("d");
+        ad.addLast("d");
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.printDeque();
+        ad.addFirst("a");
+        ad.addFirst("b");
+        ad.addLast("c");
+        ad.addLast("d");
         ad.addFirst("a");
         ad.addFirst("b");
         ad.addLast("c");
