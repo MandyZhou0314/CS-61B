@@ -6,7 +6,7 @@ public class ArrayDeque<T> implements Deque<T> {
     private int firstIndex;
     private int lastIndex;
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
         firstIndex = 0;
@@ -14,14 +14,14 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     @Override
-    public int size(){
+    public int size() {
         return this.size;
     }
 
     //circular approach
     @Override
-    public void addFirst(T x){
-        if (size == items.length){
+    public void addFirst(T x) {
+        if (size == items.length) {
             resize(size * 2);
         }
         items[firstIndex] = x;
@@ -30,8 +30,8 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     @Override
-    public void addLast(T x){
-        if (size == items.length){
+    public void addLast(T x) {
+        if (size == items.length) {
             resize(size * 2);
         }
         items[lastIndex] = x;
@@ -41,7 +41,7 @@ public class ArrayDeque<T> implements Deque<T> {
 
     // should be able to handle size increasing and decreasing
     private void resize(int cap) {
-        T[] newArray = (T []) new Object[cap];
+        T[] newArray = (T[]) new Object[cap];
         for (int i = 0; i < size(); i++) {
             newArray[i] = get(i);
         }
@@ -51,11 +51,10 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     @Override
-    public T removeFirst(){
-        if (size == 0){
+    public T removeFirst() {
+        if (size == 0) {
             return null;
-        }
-        else if (size < items.length * 0.25 && items.length > 16){
+        } else if (size < items.length * 0.25 && items.length > 16) {
             resize(items.length / 3);
         }
         T x = get(0);
@@ -65,11 +64,10 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     @Override
-    public T removeLast(){
-        if (size == 0){
+    public T removeLast() {
+        if (size == 0) {
             return null;
-        }
-        else if (size < items.length * 0.25 && items.length > 16){
+        } else if (size < items.length * 0.25 && items.length > 16) {
             resize(items.length / 3);
         }
         T x = get(size - 1);
@@ -89,7 +87,7 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public void printDeque() {
-        for (int i = 0; i < size(); i++){
+        for (int i = 0; i < size(); i++) {
             System.out.print(get(i) + " ");
         }
         System.out.println();
