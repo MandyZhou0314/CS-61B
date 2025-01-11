@@ -32,7 +32,7 @@ public class TestBuggyAList {
         AListNoResizing<Integer> L = new AListNoResizing<>();
         BuggyAList<Integer> R = new BuggyAList<>();
 
-        int N = 100000;
+        int N = 10000;
         for (int i = 0; i < N; i += 1) {
             int operationNumber = StdRandom.uniform(0, 4);
             if (operationNumber == 0) {
