@@ -1,12 +1,14 @@
 package deque;
 
-public class ArrayDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int firstIndex;
     private int lastIndex;
 
-    public ArrayDeque() {
+    ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
         firstIndex = 0;
@@ -93,7 +95,52 @@ public class ArrayDeque<T> implements Deque<T> {
         System.out.println();
     }
 
-    public static void main(String[] args) {
+    private class ArrayDequeIterator implements Iterator<T> {
+        int arrayIndex;
+
+        ArrayDequeIterator() {
+            arrayIndex = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return arrayIndex < size();
+        }
+
+        @Override
+        public T next() {
+            T ret = get(arrayIndex);
+            arrayIndex++;
+            return ret;
+        }
+    }
+
+    public boolean equals(Object o) {
+        if (!(o instanceof ArrayDeque)) {
+            return false;
+        }
+        ArrayDeque<T> other = (ArrayDeque<T>) o;
+        if (this.size != other.size) {
+            return false;
+        }
+        Iterator<T> iterator1 = this.iterator();
+        Iterator<T> iterator2 = other.iterator();
+        while (iterator1.hasNext()) {
+            T t1 = iterator1.next();
+            T t2 = iterator2.next();
+            if (!t1.equals(t2)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    private static void main(String[] args) {
         ArrayDeque<String> ad = new ArrayDeque<>();
         ad.addFirst("a");
         ad.addFirst("b");
@@ -127,5 +174,4 @@ public class ArrayDeque<T> implements Deque<T> {
         ad.removeLast();
         ad.printDeque();
     }
-
 }

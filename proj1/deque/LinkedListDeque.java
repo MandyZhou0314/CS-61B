@@ -119,12 +119,16 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         if (!(o instanceof LinkedListDeque)) {
             return false;
         }
-        LinkedListDeque other = (LinkedListDeque) o;
+        LinkedListDeque<T> other = (LinkedListDeque<T>) o;
         if (this.size != other.size) {
             return false;
         }
-        for (int i = 0; i < size; i++) {
-            if (other.get(i) != this.get(i)) {
+        Iterator<T> iterator1 = this.iterator();
+        Iterator<T> iterator2 = other.iterator();
+        while (iterator1.hasNext()) {
+            T t1 = iterator1.next();
+            T t2 = iterator2.next();
+            if (!t1.equals(t2)) {
                 return false;
             }
         }
@@ -135,8 +139,8 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         private Node node;
         private Node sentinel;
 
-        public LinkedListIterator(Node sentinel) {
-            this.sentinel = sentinel;
+        LinkedListIterator() {
+            this.sentinel = LinkedListDeque.this.sentinel;
             this.node = sentinel.next;
         }
 
@@ -154,7 +158,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     public Iterator<T> iterator() {
-        return new LinkedListIterator(this.sentinel);
+        return new LinkedListIterator();
     }
 
     @Override
@@ -165,7 +169,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         System.out.println();
     }
 
-    public static void main(String[] args) {
+    private static void main(String[] args) {
         LinkedListDeque<String> ll = new LinkedListDeque<>();
         ll.addFirst("a");
         ll.addFirst("b");
