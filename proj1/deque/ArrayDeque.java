@@ -8,7 +8,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int firstIndex;
     private int lastIndex;
 
-    ArrayDeque() {
+    public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
         firstIndex = 0;
