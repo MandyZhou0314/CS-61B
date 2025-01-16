@@ -3,10 +3,10 @@ package bstmap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class BSTMap<K extends Comparable, V> implements Map61B {
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K,V> {
 
-    int size = 0;
-    BSTNode<K, V> root;
+    private int size = 0;
+    private BSTNode<K, V> root;
 
     /* Constructor */
     private class BSTNode<K, V> {
@@ -48,12 +48,12 @@ public class BSTMap<K extends Comparable, V> implements Map61B {
 
     /* Returns true if this map contains a mapping for the specified key. */
     @Override
-    public boolean containsKey(Object key) {
-        return containsKeyFromNode((K) key, root);
+    public boolean containsKey(K key) {
+        return containsKeyFromNode(key, root);
     }
 
     /* Helper method of get by using recursion */
-    private Object getValueFromNode(K key, BSTNode<K, V> node){
+    private V getValueFromNode(K key, BSTNode<K, V> node){
         if (node == null) {
             return null;
         }
@@ -71,8 +71,8 @@ public class BSTMap<K extends Comparable, V> implements Map61B {
 
     /* Returns the value to which the specified key is mapped, or null if no mapping*/
     @Override
-    public Object get(Object key) {
-        return getValueFromNode((K) key, root);
+    public V get(K key) {
+        return getValueFromNode(key, root);
     }
 
     @Override
@@ -100,8 +100,8 @@ public class BSTMap<K extends Comparable, V> implements Map61B {
 
     /* Inserts the specified value with the specified key in this map. */
     @Override
-    public void put(Object key, Object value) {
-        root = putFromNode((K)key, (V)value, root);
+    public void put(K key, V value) {
+        root = putFromNode(key, value, root);
     }
 
     /* Helper method of print by using recursion */
@@ -126,12 +126,12 @@ public class BSTMap<K extends Comparable, V> implements Map61B {
     }
 
     @Override
-    public Object remove(Object key) {
+    public V remove(K key) {
         throw new UnsupportedOperationException("Unsupported operation.");
     }
 
     @Override
-    public Object remove(Object key, Object value) {
+    public V remove(K key, V value) {
         throw new UnsupportedOperationException("Unsupported operation.");
     }
 
